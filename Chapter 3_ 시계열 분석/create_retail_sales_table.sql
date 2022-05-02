@@ -1,4 +1,4 @@
--- create the table
+-- 테이블을 생성합니다.
 DROP table if exists retail_sales;
 CREATE table retail_sales
 (
@@ -10,9 +10,9 @@ sales_month date
 )
 ;
 
--- populate the table with data from the csv file. Download the file locally before completing this step
+-- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다. 
 COPY retail_sales 
-FROM 'localpath/us_retail_sales.csv' -- change to the location you saved the csv file
+FROM 'C:\sql_data\us_retail_sales.csv' -- 본인이 다운로드 한 CSV 파일의 경로에 맞게 수정하세요
 DELIMITER ','
 CSV HEADER
 ;
