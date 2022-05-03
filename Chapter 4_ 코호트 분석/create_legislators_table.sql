@@ -1,19 +1,18 @@
 -- 테이블을 생성합니다.
 DROP table if exists legislators;
-
 CREATE table legislators
 (
-full_name varchar--name_official_full
-,first_name varchar --name_first
-,last_name varchar --name_last
-,middle_name varchar --name_middle
-,nickname varchar --name_nickname
-,suffix varchar --name_suffix
-,other_names_end date -- other_names_0_end date
-,other_names_middle varchar -- other_names_0_middle
-,other_names_last varchar -- other_names_0_last
-,birthday date -- bio_birthday
-,gender varchar-- bio_gender
+full_name varchar
+,first_name varchar
+,last_name varchar
+,middle_name varchar
+,nickname varchar
+,suffix varchar
+,other_names_end date
+,other_names_middle varchar
+,other_names_last varchar
+,birthday date
+,gender varchar
 ,id_bioguide varchar primary key
 ,id_bioguide_previous_0 varchar
 ,id_govtrack int
@@ -36,9 +35,6 @@ full_name varchar--name_official_full
 ;
 
 -- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다.
-COPY legislators
-FROM 'C:\sql_data\legislators.csv' -- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
-DELIMITER ','
-CSV HEADER
-;
+-- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
+COPY legislators FROM 'C:\sql_data\legislators.csv' DELIMITER ',' CSV HEADER;
 

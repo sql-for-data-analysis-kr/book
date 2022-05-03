@@ -14,22 +14,19 @@ id_bioguide varchar
 ,party varchar
 ,how varchar
 ,url varchar--terms_1_url
-,address varchar --terms_1_address
-,phone varchar --terms_1_phone
-,fax varchar --terms_1_fax
-,contact_form varchar --terms_1_contact_form
-,office varchar--terms_1_office
-,state_rank varchar --terms_1_state_rank
-,rss_url varchar --terms_1_rss_url
-,caucus varchar -- terms_1_caucus
+,address varchar
+,phone varchar
+,fax varchar
+,contact_form varchar
+,office varchar
+,state_rank varchar
+,rss_url varchar
+,caucus varchar
 )
 ;
 
--- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다. 
-COPY legislators_terms
-FROM 'C:\sql_data\legislators_terms.csv' -- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
-DELIMITER ','
-CSV HEADER
-;
+-- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다.
+-- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
+COPY legislators_terms FROM 'C:\sql_data\legislators_terms.csv' DELIMITER ',' CSV HEADER;
 
 

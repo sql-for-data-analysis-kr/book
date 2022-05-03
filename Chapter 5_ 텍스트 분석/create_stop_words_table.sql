@@ -1,3 +1,4 @@
+-- 테이블을 생성합니다.
 DROP table if exists public.stop_words;
 CREATE table public.stop_words
 (stop_word varchar

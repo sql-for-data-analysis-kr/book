@@ -1,5 +1,5 @@
+-- 테이블을 생성합니다.
 DROP table if exists public.date_dim;
-
 CREATE table public.date_dim
 as
 SELECT date::date
