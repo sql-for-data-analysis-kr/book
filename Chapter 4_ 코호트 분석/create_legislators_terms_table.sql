@@ -1,3 +1,4 @@
+-- 테이블을 생성합니다.
 DROP table if exists legislators_terms;
 CREATE table legislators_terms
 (
@@ -24,8 +25,9 @@ id_bioguide varchar
 )
 ;
 
+-- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다. 
 COPY legislators_terms
-FROM '/localpath/legislators_terms.csv' -- change to the location you saved the csv file
+FROM 'C:\sql_data\legislators_terms.csv' -- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
 DELIMITER ','
 CSV HEADER
 ;

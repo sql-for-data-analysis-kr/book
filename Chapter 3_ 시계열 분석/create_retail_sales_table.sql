@@ -12,7 +12,7 @@ sales_month date
 
 -- CSV 파일에서 데이터를 읽어 테이블에 채워넣습니다. 
 COPY retail_sales 
-FROM 'C:\sql_data\us_retail_sales.csv' -- 본인이 다운로드 한 CSV 파일의 경로에 맞게 수정하세요
+FROM 'C:\sql_data\us_retail_sales.csv' -- 본인이 다운로드 한 CSV 파일의 경로로 수정하세요
 DELIMITER ','
 CSV HEADER
 ;
