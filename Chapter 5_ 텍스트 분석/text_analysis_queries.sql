@@ -1,28 +1,36 @@
----- Text characteristics
+-- 5장 텍스트 분석
+
+
 SELECT length(sighting_report), count(*) as records
 FROM ufo
 GROUP BY 1
 ORDER BY 1
 ;
 
----- Text parsing
+---- 5.4 텍스트 파싱
+
+
 SELECT left(sighting_report,8) as left_digits
 ,count(*)
 FROM ufo
 GROUP BY 1
 ;
 
+
 SELECT right(left(sighting_report,25),14) as occurred
 FROM ufo
 ;
+
 
 SELECT split_part(sighting_report,'Occurred : ',2) as split_1
 FROM ufo
 ;
 
+
 SELECT split_part(sighting_report,' (Entered',1) as split_2
 FROM ufo
 ;
+
 
 SELECT split_part(
 split_part(sighting_report,' (Entered',1)
@@ -30,9 +38,11 @@ split_part(sighting_report,' (Entered',1)
 FROM ufo
 ;
 
+
 SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred
 FROM ufo
 ;
+
 
 SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred
 ,split_part(split_part(sighting_report,')',1),'Entered as : ',2) as entered_as
@@ -44,16 +54,19 @@ SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred
 FROM ufo
 ;
 
----- Text transformations
+-- 5.5 텍스트 변환
+
+
 SELECT distinct shape, initcap(shape) as shape_clean
 FROM
 (
-        SELECT split_part(
-        split_part(sighting_report,'Duration',1)
-        ,'Shape: ',2) as shape
-        FROM ufo
+    SELECT split_part(
+             split_part(sighting_report,'Duration',1)
+             ,'Shape: ',2) as shape
+    FROM ufo
 ) a
 ;
+
 
 SELECT duration, trim(duration) as duration_clean
 FROM
@@ -63,18 +76,23 @@ FROM
 ) a
 ;
 
+
 SELECT occurred::timestamp
 ,reported::timestamp as reported
 ,posted::date as posted
 FROM
 (
-        SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred   
+    SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred   
         ,split_part(split_part(split_part(split_part(sighting_report,'Post',1),'Reported: ',2),' AM',1),' PM',1) as reported
         ,split_part(split_part(sighting_report,'Location',1),'Posted: ',2) as posted
-        FROM ufo
-        limit 10
+    FROM ufo
 ) a
+WHERE length(a.occurred) >= 8 
+and length(a.reported) >= 8 
+and length(a.posted) >= 8
+ORDER BY 1
 ;
+
 
 SELECT 
 case when occurred = '' then null 
@@ -89,22 +107,26 @@ case when occurred = '' then null
       end as posted
 FROM
 (
-        SELECT split_part(split_part(split_part(sighting_report,'(Entered',1),'Occurred : ',2),'Reported',1) as occurred 
-        ,split_part(split_part(split_part(split_part(sighting_report,'Post',1),'Reported: ',2),' AM',1),' PM',1) as reported
-        ,split_part(split_part(sighting_report,'Location',1),'Posted: ',2) as posted
-        FROM ufo
+    SELECT split_part(split_part(split_part(sighting_report,'(Entered',1),'Occurred : ',2),'Reported',1) as occurred 
+    ,split_part(split_part(split_part(split_part(sighting_report,'Post',1),'Reported: ',2),' AM',1),' PM',1) as reported
+    ,split_part(split_part(sighting_report,'Location',1),'Posted: ',2) as posted
+    FROM ufo
 ) a
+ORDER BY 1
 ;
+
 
 SELECT location
 ,replace(replace(location,'close to','near')
 ,'outside of','near') as location_clean
 FROM
 (
-        SELECT split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
-        FROM ufo
+    SELECT split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
+    FROM ufo
 ) a
+ORDER BY 1
 ;
+
 
 SELECT 
 case when occurred = '' then null 
@@ -132,35 +154,45 @@ FROM
         ,split_part(sighting_report,'Duration:',2) as duration
         FROM ufo
 ) a
+ORDER BY 1
 ;
 
----- Finding elements within larger blocks of text
--- Wildcard matches
+
+-- 5.6 대규모 텍스트에서 문자열 찾기
+
+-- 5.6.1 와일드카드 매칭: LIKE, ILIKE
+
+
 SELECT count(*)
 FROM ufo
 WHERE description like '%wife%'
 ;
 
+
 SELECT count(*)
 FROM ufo
 WHERE lower(description) like '%wife%'
 ;
+
 
 SELECT count(*)
 FROM ufo
 WHERE description ilike '%wife%'
 ;
 
+
 SELECT count(*)
 FROM ufo
 WHERE lower(description) not like '%wife%'
 ;
+
 
 SELECT count(*)
 FROM ufo
 WHERE lower(description) like '%wife%'
 or lower(description) like '%husband%'
 ;
+
 
 SELECT count(*)
 FROM ufo
@@ -168,6 +200,7 @@ WHERE lower(description) like '%wife%'
 or lower(description) like '%husband%'
 and lower(description) like '%mother%'
 ;
+
 
 SELECT count(*)
 FROM ufo
@@ -176,6 +209,7 @@ WHERE (lower(description) like '%wife%'
        )
 and lower(description) like '%mother%'
 ;
+
 
 SELECT 
 case when lower(description) like '%driving%' then 'driving'
@@ -190,6 +224,7 @@ GROUP BY 1
 ORDER BY 2 desc
 ;
 
+
 SELECT description ilike '%south%' as south
 ,description ilike '%north%' as north
 ,description ilike '%east%' as east
@@ -200,6 +235,7 @@ GROUP BY 1,2,3,4
 ORDER BY 1,2,3,4
 ;
 
+
 SELECT 
 count(case when description ilike '%south%' then 1 end) as south
 ,count(case when description ilike '%north%' then 1 end) as north
@@ -208,7 +244,10 @@ count(case when description ilike '%south%' then 1 end) as south
 FROM ufo
 ;
 
--- Exact matches
+
+-- 5.6.2 정확한 매칭: IN, NOT IN
+
+
 SELECT first_word, description
 FROM
 (
@@ -225,6 +264,7 @@ or first_word = 'Purple'
 or first_word = 'White'
 ;
 
+
 SELECT first_word, description
 FROM
 (
@@ -234,6 +274,7 @@ FROM
 ) a
 WHERE first_word in ('Red','Orange','Yellow','Green','Blue','Purple','White')
 ;
+
 
 SELECT 
 case when lower(first_word) in ('red','orange','yellow','green', 
@@ -257,12 +298,18 @@ GROUP BY 1
 ORDER BY 2 desc
 ;
 
--- Regular expressions
--- Finding and replacing with Regex
+
+-- 5.6.6 정규 표현식
+
+
+-- 5.6.3.1 정규 표현식을 활용한 패턴 매칭과 대체
+
+
 SELECT left(description,50)
 FROM ufo
 WHERE left(description,50) ~ '[0-9]+ light[s ,.]'
 ;
+
 
 SELECT (regexp_matches(description,'[0-9]+ light[s ,.]'))[1]
 ,count(*)
@@ -272,46 +319,52 @@ GROUP BY 1
 ORDER BY 2 desc
 ; 
 
+
 SELECT min(split_part(matched_text,' ',1)::int) as min_lights
 ,max(split_part(matched_text,' ',1)::int) as max_lights
 FROM
 (
-        SELECT (regexp_matches(description,'[0-9]+ light[s ,.]'))[1] as matched_text
-        ,count(*)
-        FROM ufo
-        WHERE description ~ '[0-9]+ light[s ,.]'
-        GROUP BY 1
+    SELECT (regexp_matches(description,'[0-9]+ light[s ,.]'))[1] as matched_text
+    ,count(*)
+    FROM ufo
+    WHERE description ~ '[0-9]+ light[s ,.]'
+    GROUP BY 1
 ) a
 ; 
+
 
 SELECT split_part(sighting_report,'Duration:',2) as duration
 ,count(*) as reports
 FROM ufo
 GROUP BY 1
+ORDER BY desc
 ;
+
 
 SELECT duration
 ,(regexp_matches(duration,'\m[Mm][Ii][Nn][A-Za-z]*\y'))[1] as matched_minutes
 FROM
 (
-        SELECT split_part(sighting_report,'Duration:',2) as duration
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1
+    SELECT split_part(sighting_report,'Duration:',2) as duration
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1
 ) a
 ;
+
 
 SELECT duration
 ,(regexp_matches(duration,'\m[Mm][Ii][Nn][A-Za-z]*\y'))[1] as matched_minutes
 ,regexp_replace(duration,'\m[Mm][Ii][Nn][A-Za-z]*\y','min') as replaced_text
 FROM
 (
-        SELECT split_part(sighting_report,'Duration:',2) as duration
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1
+    SELECT split_part(sighting_report,'Duration:',2) as duration
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1
 ) a
 ;
+
 
 SELECT duration
 ,(regexp_matches(duration,'\m[Hh][Oo][Uu][Rr][A-Za-z]*\y'))[1] as matched_hour
@@ -319,36 +372,46 @@ SELECT duration
 ,regexp_replace(regexp_replace(duration,'\m[Mm][Ii][Nn][A-Za-z]*\y','min'),'\m[Hh][Oo][Uu][Rr][A-Za-z]*\y','hr') as replaced_text
 FROM
 (
-        SELECT split_part(sighting_report,'Duration:',2) as duration
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1
+    SELECT split_part(sighting_report,'Duration:',2) as duration
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1
 ) a
 ;
 
------ Constructing and reshaping text
+
+-- 5.7 텍스트 구성과 형태 변환
+
+
+-- 5.7.1 문자열 연결
+
+
 SELECT concat(shape, ' (shape)') as shape
 ,concat(reports, ' reports') as reports
 FROM
 (
-        SELECT split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1
+    SELECT split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1
 ) a
+WHERE shape <> ''
+ORDER BY 1
 ;
+
 
 SELECT concat(shape,' - ',location) as shape_location
 ,reports
 FROM
 (
-        SELECT split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
-        ,split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1,2
+    SELECT split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
+    ,split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1,2
 ) a
 ;
+
 
 SELECT 
 concat('There were '
@@ -371,67 +434,67 @@ concat('There were '
        )
 FROM
 (
-        SELECT shape
-        ,min(occurred::date) as earliest
-        ,max(occurred::date) as latest
-        ,sum(reports) as reports
-        FROM
-        (
-                SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred
-                ,split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
-                ,count(*) as reports
-                FROM ufo
-                GROUP BY 1,2
-        ) a
-        WHERE length(occurred) >= 8
-        GROUP BY 1
+    SELECT shape
+    ,min(occurred::date) as earliest
+    ,max(occurred::date) as latest
+    ,sum(reports) as reports
+    FROM
+    (
+        SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred : ',2),'Reported',1) as occurred
+        ,split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) as shape
+        ,count(*) as reports
+        FROM ufo
+        GROUP BY 1,2
+    ) a
+    WHERE length(occurred) >= 8
+    GROUP BY 1
 ) aa    
 ;
 
--- Reshaping
+
+-- 5.7.2 텍스트 형태 변환
+
+
 SELECT location
 ,string_agg(shape,', ' order by shape asc) as shapes
 FROM
 (
-        SELECT 
-        case when split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) = '' then 'Unknown'
-             when split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) = 'TRIANGULAR' then 'Triangle'
-             else split_part(split_part(sighting_report,'Duration',1),'Shape: ',2)  
-             end as shape
-        ,split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
-        ,count(*) as reports
-        FROM ufo
-        GROUP BY 1,2
+    SELECT 
+    case when split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) = '' then 'Unknown'
+         when split_part(split_part(sighting_report,'Duration',1),'Shape: ',2) = 'TRIANGULAR' then 'Triangle'
+         else split_part(split_part(sighting_report,'Duration',1),'Shape: ',2)  
+         end as shape
+    ,split_part(split_part(sighting_report,'Shape',1),'Location: ',2) as location
+    ,count(*) as reports
+    FROM ufo
+    GROUP BY 1,2
 ) a
 GROUP BY 1
 ;
 
+
 SELECT word, count(*) as frequency
 FROM
 (
-        SELECT regexp_split_to_table(lower(description),'\s+') as word
-        FROM ufo
+    SELECT regexp_split_to_table(lower(description),'\s+') as word
+     FROM ufo
 ) a
 GROUP BY 1
 ORDER BY 2 desc
 ;
 
+
 SELECT word, count(*) as frequency
 FROM
 (
-        SELECT regexp_split_to_table(lower(description),'\s+') as word
-        FROM ufo
+    SELECT regexp_split_to_table(lower(description),'\s+') as word
+    FROM ufo
 ) a
 LEFT JOIN stop_words b on a.word = b.stop_word
 WHERE b.stop_word is null
 GROUP BY 1
 ORDER BY 2 desc
 ;
-
-
-
-
-
 
 
 
