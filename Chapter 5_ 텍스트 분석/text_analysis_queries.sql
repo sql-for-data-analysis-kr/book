@@ -54,6 +54,7 @@ SELECT split_part(split_part(split_part(sighting_report,' (Entered',1),'Occurred
 FROM ufo
 ;
 
+
 -- 5.5 텍스트 변환
 
 
