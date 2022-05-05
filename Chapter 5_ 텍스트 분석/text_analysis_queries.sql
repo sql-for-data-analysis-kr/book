@@ -77,6 +77,7 @@ FROM
 ;
 
 
+SET datestyle = mdy; -- 타입 변환 에러가 발생하지 않도록, 현재 저장된 문자열이 월/일/연도(month/day/year)의 포맷으로 저장되어 있음을 명시 
 SELECT occurred::timestamp
 ,reported::timestamp as reported
 ,posted::date as posted
