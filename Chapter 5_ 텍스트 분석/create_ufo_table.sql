@@ -15,4 +15,5 @@ COPY ufo FROM 'C:\sql_data\ufo3.csv' DELIMITER ',' CSV HEADER;
 COPY ufo FROM 'C:\sql_data\ufo4.csv' DELIMITER ',' CSV HEADER;
 COPY ufo FROM 'C:\sql_data\ufo5.csv' DELIMITER ',' CSV HEADER;
 
-
+-- 데이터 추가시 인코딩 오류가 발생하면 아래 명령어를 먼저 실행하세요
+SET client_encoding to 'UTF8';
