@@ -18,7 +18,7 @@
 
 ![설치_03](./Image/Installation/Installation_03.JPG)
 ```
-3. PostgreSQL 서버, GUI기반 데이터베이스 관리도구인 pgAdmin 4, Command Line Tools 만 설치하겠습니다.
+3. PostgreSQL 서버, pgAdmin 4, Command Line Tools만 설치하겠습니다.
 ```
 
 ![설치_04](./Image/Installation/Installation_04.JPG)
@@ -77,12 +77,14 @@
 
 ![pgAdmin_04](./Image/pgAdmin/pgadmin_04.JPG)
 ```
-4. 새로 생성할 PostgreSQL 서버의 이름을 입력합니다. 여기서는 SQL_for_data_analysis를 입력하였습니다.
+4. 새로 생성할 PostgreSQL 서버의 이름을 입력합니다. 
+여기서는 SQL_for_data_analysis를 입력하였습니다.
 ```
 
 ![pgAdmin_05](./Image/pgAdmin/pgadmin_05.JPG)
 ```
-5. Connection 탭으로 이동하여 Host 주소에 localhost를 입력하고, Password에 비밀번호를 입력합니다. Save password? 를 선택하면 다음 접속부터 비밀번호를 묻지 않습니다. Save 버튼을 클릭합니다.
+5. Connection 탭으로 이동하여 Host 주소에 localhost를 입력하고, Password에 비밀번호를 입력합니다. 
+Save password? 를 선택하면 다음 접속부터 비밀번호를 묻지 않습니다. Save 버튼을 클릭합니다.
 ```
 
 ![pgAdmin_06](./Image/pgAdmin/pgadmin_06.JPG)
@@ -92,12 +94,14 @@
                                   
 ![pgAdmin_07](./Image/pgAdmin/pgadmin_07.JPG)
 ```
-7. 새로 생성한 서버의 데이터베이스 아래 postgres에서 마우스 우클릭하여 Query Tool을 선택하면 쿼리 에디터를 열 수 있습니다.
+7. 새로 생성한 서버의 데이터베이스 아래 postgres에서 마우스 우클릭하여 Query Tool을 선택하면 
+쿼리 에디터를 열 수 있습니다.
 ```
 
 ![pgAdmin_08](./Image/pgAdmin/pgadmin_08.JPG)
 ```
-8. Chapter 2_데이터 준비 폴더에 있는 create_date_dimension_table.sql 파일을 참고하여, 날짜 차원 테이블을 생성하는 코드를 입력하고, 우측 상단의 실행 버튼을 클릭합니다.
+8. Chapter 2_데이터 준비 폴더에 있는 create_date_dimension_table.sql 파일을 참고하여, 
+날짜 차원 테이블을 생성하는 코드를 입력하고, 우측 상단의 실행 버튼을 클릭합니다.
 ```
 
 ![pgAdmin_09](./Image/pgAdmin/pgadmin_09.JPG)
@@ -112,14 +116,15 @@
 
 ![pgAdmin_11](./Image/pgAdmin/pgadmin_11.JPG)
 ```
-11. SELECT * FROM date_dim; 을 실행하면, Data Output 탭에서 방금 생성한 날짜 차원 테이블의 데이터를 확인할 수 있습니다.
+11. SELECT * FROM date_dim; 을 실행하면, 
+Data Output 탭에서 방금 생성한 날짜 차원 테이블의 데이터를 확인할 수 있습니다.
 ```
 
 ## 문제 해결
 
 ### 데이터 테이블 생성시 문제 해결
 ```
-오류:  0xe2 0x80 바이트로 조합된 문자(인코딩: "UHC")와 대응되는 문자 코드가 "UTF8" 인코딩에는 없습니다
+오류: 0xe2 0x80 바이트로 조합된 문자(인코딩: "UHC")와 대응되는 문자 코드가 "UTF8" 인코딩에는 없습니다
 ```
 위와 같은 오류가 발생하는 경우 별도의 인코딩 설정이 필요합니다.
 
