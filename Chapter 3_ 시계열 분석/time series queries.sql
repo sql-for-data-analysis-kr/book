@@ -215,6 +215,7 @@ SELECT sales_month, kind_of_business, sales
 FROM retail_sales
 WHERE kind_of_business in ('Men''s clothing stores'
  ,'Women''s clothing stores')
+ORDER BY 1,2
 ;
 
 -- 3.3.4 시계열 데이터 변화 이해를 위한 인덱싱
