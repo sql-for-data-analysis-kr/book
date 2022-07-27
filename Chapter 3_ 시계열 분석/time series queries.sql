@@ -184,7 +184,6 @@ ORDER BY 1,2
 
 
 SELECT sales_month
-SELECT sales_month
 ,kind_of_business
 ,sales * 100 / yearly_sales as pct_yearly
 FROM
@@ -205,26 +204,18 @@ ORDER BY 1,2
 ;
 
 
-SELECT sales_month
-,kind_of_business
-,sales * 100 / yearly_sales as pct_yearly
-FROM
-(
-    SELECT a.sales_month, a.kind_of_business, a.sales
-    ,sum(b.sales) as yearly_sales
-    FROM retail_sales a
-    JOIN retail_sales b on
-    date_part('year',a.sales_month) = date_part('year',b.sales_month)
-    and a.kind_of_business = b.kind_of_business
-    and b.kind_of_business in ('Men''s clothing stores'
-    ,'Women''s clothing stores')
-    WHERE a.kind_of_business in ('Men''s clothing stores'
-    ,'Women''s clothing stores')
-    GROUP BY 1,2,3
-    ) aa
-ORDER BY 1,2 
+SELECT sales_month, kind_of_business, sales
+,sum(sales) over (partition by date_part('year',sales_month)
+                               ,kind_of_business
+                               ) as yearly_sales
+,sales * 100 /
+ sum(sales) over (partition by date_part('year',sales_month)
+                               ,kind_of_business
+                               ) as pct_yearly
+FROM retail_sales
+WHERE kind_of_business in ('Men''s clothing stores'
+ ,'Women''s clothing stores')
 ;
-
 
 -- 3.3.4 시계열 데이터 변화 이해를 위한 인덱싱
 
