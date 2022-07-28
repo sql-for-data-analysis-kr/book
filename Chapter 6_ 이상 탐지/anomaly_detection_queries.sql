@@ -353,7 +353,6 @@ ORDER BY 2,3,4,5
 SELECT time, mag, type
 FROM earthquakes
 WHERE mag not in (-9,-9.99)
-limit 100
 ;
 
 
