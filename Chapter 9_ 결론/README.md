@@ -1,21 +1,4 @@
-Resources for Chapter 9
+9장. 결론
 
-Data Podcasts (these cover a range of analytics and data science topics, but are not necessarily about SQL specifically):
-* Analytics Power Hour: https://analyticshour.io/
-* Data Bytes by Women in Data: https://anchor.fm/women-in-data
-* DataFramed: https://www.datacamp.com/community/podcast
-* Data Skeptic: https://dataskeptic.com/
-* Klaviyo Data Science Podcast: https://medium.com/klaviyo-data-science/tagged/podcast
-* TWIML: https://twimlai.com/shows/
-* Women in Data Science: https://www.widsconference.org/podcast.html
-* You are Not So Smart: https://youarenotsosmart.com/podcast/
-
-Data Newsletters
-* Data Elixir: https://dataelixir.com/
-
-Books - Non-technical (
-* How to Measure Anything: Finding the Value of "Intangibles" in Business by Douglas Hubbard
-* Thinking, Fast and Slow by Daniel Kahneman
-* Mastermind: How to Think Like Sherlock Holmes by Maria Konnikova
-* The Black Swan: The Impact of the Highly Improbable by Nassim Nicholas Taleb
-* Brain Rules: 12 Principles for Surviving and Thriving at Work, Home, and School
+9장은 가상의 데이터가 있다고 가정하고 작성한 수도 코드가 많이 사용되었습니다.
+실제 데이터가 없어서 코드를 실행해보지는 못하더라도 책의 내용을 잘 이해하고 코드가 어떻게 동작할지 생각해보기 바랍니다.
