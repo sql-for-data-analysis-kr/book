@@ -30,7 +30,7 @@
 
 ### SQL 실습 환경 구축
 
-- [PostgreSQL 설치 및 실행](./ostgreSQL_설치및실행방법.md)
+- [PostgreSQL 설치 및 실행](./postgreSQL_설치및실행방법.md)
 
 ### SQL 실행시 문제 해결
 
