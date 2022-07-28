@@ -30,7 +30,7 @@
 
 ### SQL 실습 환경 구축
 
-- [PostgreSQL 설치 및 실행](./postgreSQL_설치및실행방법.md)
+- [PostgreSQL 설치 및 실행](https://github.com/sql-for-data-analysis-kr/book/blob/main/PostgreSQL_%EC%84%A4%EC%B9%98%EB%B0%8F%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95.md)
 
 ### SQL 실행시 문제 해결
 
