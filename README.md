@@ -20,7 +20,7 @@
 - [6장. 이상 탐지](https://github.com/sql-for-data-analysis-kr/book/tree/main/6%EC%9E%A5.%20%EC%9D%B4%EC%83%81%20%ED%83%90%EC%A7%80)
 - [7장. 실험 분석](https://github.com/sql-for-data-analysis-kr/book/tree/main/7%EC%9E%A5.%20%EC%8B%A4%ED%97%98%20%EB%B6%84%EC%84%9D)
 - [8장. 복잡한 데이터셋 생성](https://github.com/sql-for-data-analysis-kr/book/tree/main/8%EC%9E%A5.%20%EB%B3%B5%EC%9E%A1%ED%95%9C%20%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%85%8B%20%EC%83%9D%EC%84%B1)
-- [장. 결론](https://github.com/sql-for-data-analysis-kr/book/tree/main/9%EC%9E%A5.%20%EA%B2%B0%EB%A1%A0)
+- [9장. 결론](https://github.com/sql-for-data-analysis-kr/book/tree/main/9%EC%9E%A5.%20%EA%B2%B0%EB%A1%A0)
 
 ---
 
