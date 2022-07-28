@@ -339,7 +339,7 @@ SELECT split_part(sighting_report,'Duration:',2) as duration
 ,count(*) as reports
 FROM ufo
 GROUP BY 1
-ORDER BY desc
+ORDER BY 2 desc
 ;
 
 
