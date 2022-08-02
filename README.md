@@ -1,4 +1,4 @@
-<img src="./Image/cover.jpg" width="300px">
+<img src="./Image/cover.jpg" width="400px">
 
 ## SQL로 시작하는 데이터 분석    
 
